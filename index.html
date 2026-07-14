@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MGames</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container animate-fade-in">
+        <header class="main-header">
+            <div class="header-branding">
+                <h1 id="app-title">MGames</h1>
+                <p id="app-subtitle" class="subtitle">Select a game to play</p>
+            </div>
+            <div class="header-controls">
+                <button id="home-btn" class="icon-btn hidden" aria-label="Go to Main Menu">🏠</button>
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">🌙</button>
+            </div>
+        </header>
+
+        <main class="main-layout">
+            <section id="arcade-lobby" class="game-section">
+                <div class="lobby-grid">
+                    <div class="lobby-card" data-target="game-flag" style="--accent-glow: #10b981;">
+                        <div class="lobby-icon" style="background-color: rgba(16, 185, 129, 0.15); color: #10b981;">🌍</div>
+                        <div class="lobby-info">
+                            <h3>Guess the Flag</h3>
+                            <p>Test your geography skills</p>
+                        </div>
+                    </div>
+                    <div class="lobby-card" data-target="game-ttt" style="--accent-glow: #a855f7;">
+                        <div class="lobby-icon" style="background-color: rgba(168, 85, 247, 0.15); color: #a855f7;">❌</div>
+                        <div class="lobby-info">
+                            <h3>Tic-Tac-Toe</h3>
+                            <p>Play a friend or the bot</p>
+                        </div>
+                    </div>
+                    <div class="lobby-card" data-target="game-memory" style="--accent-glow: #f59e0b;">
+                        <div class="lobby-icon" style="background-color: rgba(245, 158, 11, 0.15); color: #f59e0b;">🧠</div>
+                        <div class="lobby-info">
+                            <h3>Memory Match</h3>
+                            <p>Find the hidden emoji pairs</p>
+                        </div>
+                    </div>
+                    <div class="lobby-card" data-target="game-snake" style="--accent-glow: #22c55e;">
+                        <div class="lobby-icon" style="background-color: rgba(34, 197, 94, 0.15); color: #22c55e;">🐍</div>
+                        <div class="lobby-info">
+                            <h3>Retro Snake</h3>
+                            <p>Classic snake game</p>
+                        </div>
+                    </div>
+                    <div class="lobby-card" data-target="game-highlow" style="--accent-glow: #ef4444;">
+                        <div class="lobby-icon" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444;">🔢</div>
+                        <div class="lobby-info">
+                            <h3>High-Low</h3>
+                            <p>Guess the number in 7 tries</p>
+                        </div>
+                    </div>
+                    <div class="lobby-card" data-target="game-flappy" style="--accent-glow: #3b82f6;">
+                        <div class="lobby-icon" style="background-color: rgba(59, 130, 246, 0.15); color: #3b82f6;">🐦</div>
+                        <div class="lobby-info">
+                            <h3>Flappy Pixel</h3>
+                            <p>Flap through obstacle pipes</p>
+                        </div>
+                    </div>
+                </div>
+                <footer class="lobby-footer">
+                    <a href="https://github.com/ahmedosama2013/mgames" target="_blank" rel="noopener noreferrer" class="footer-link">View on GitHub ↗</a>
+                </footer>
+            </section>
+
+            <section id="game-flag" class="game-section hidden">
+                <div class="score-row centralize">
+                    <div class="score-board">Streak: <span id="score">0</span></div>
+                </div>
+                <div class="flag-card-wrapper">
+                    <div class="flag-card">
+                        <div id="loading-container" class="loading-state">
+                            <span class="spinner">⏳</span> Loading Flags...
+                        </div>
+                        <img id="flag-image" src="" alt="Flag to guess" class="flag-img hidden-opacity">
+                        <div id="completion-overlay" class="completion-overlay hidden">
+                            <span class="completion-icon">🏆</span>
+                            <h2>All Flags Cleared!</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-container">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Flags: <span id="progress-count">0/0</span></p>
+                </div>
+                <div id="feedback-box" class="feedback-box hidden">
+                    <p id="feedback-text"></p>
+                    <p id="closest-match-text" class="sub-feedback"></p>
+                </div>
+                <form id="guess-form" class="interaction-zone">
+                    <div class="input-wrapper">
+                        <input type="text" id="country-input" placeholder="Type country..." autocomplete="off" disabled>
+                    </div>
+                    <div class="action-buttons centralize">
+                        <button type="submit" id="submit-btn" class="primary-btn" disabled>Submit Guess</button>
+                        <button type="button" id="next-btn" class="secondary-btn hidden">Next</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="game-ttt" class="game-section hidden">
+                <div class="score-row centralize">
+                    <select id="ttt-mode" class="styled-select">
+                        <option value="pvp">👥 Pass & Play (Local)</option>
+                        <option value="easy">🤖 Easy Bot</option>
+                        <option value="hard">👾 Hard Bot</option>
+                    </select>
+                </div>
+                <div class="board-wrapper">
+                    <div class="ttt-board" id="ttt-board">
+                        <div class="ttt-cell" data-index="0"></div>
+                        <div class="ttt-cell" data-index="1"></div>
+                        <div class="ttt-cell" data-index="2"></div>
+                        <div class="ttt-cell" data-index="3"></div>
+                        <div class="ttt-cell" data-index="4"></div>
+                        <div class="ttt-cell" data-index="5"></div>
+                        <div class="ttt-cell" data-index="6"></div>
+                        <div class="ttt-cell" data-index="7"></div>
+                        <div class="ttt-cell" data-index="8"></div>
+                    </div>
+                </div>
+                <div id="ttt-feedback" class="feedback-box hidden"></div>
+                <button id="ttt-reset" class="primary-btn full-width">Restart Game</button>
+            </section>
+
+            <section id="game-memory" class="game-section hidden">
+                <div class="score-row centralize">
+                    <div class="score-board">Moves: <span id="memory-moves">0</span></div>
+                </div>
+                <div class="memory-grid" id="memory-grid"></div>
+                <div id="memory-feedback" class="feedback-box hidden correct">🏆 You found them all!</div>
+                <button id="memory-reset" class="primary-btn full-width">Restart Game</button>
+            </section>
+
+            <section id="game-snake" class="game-section hidden">
+                <div class="score-row centralize">
+                    <div class="score-board">Score: <span id="snake-score">0</span></div>
+                </div>
+                <div class="snake-container-frame">
+                    <div class="snake-container">
+                        <canvas id="snake-canvas" width="300" height="300"></canvas>
+                        <div id="snake-overlay" class="completion-overlay">
+                            <button id="snake-start" class="primary-btn spec-btn">Start Game</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dpad" role="group" aria-label="Snake movement controls">
+                    <button type="button" id="snake-up" class="dpad-btn dpad-up" aria-label="Move Up">▲</button>
+                    <button type="button" id="snake-left" class="dpad-btn dpad-left" aria-label="Move Left">◀</button>
+                    <button type="button" id="snake-right" class="dpad-btn dpad-right" aria-label="Move Right">▶</button>
+                    <button type="button" id="snake-down" class="dpad-btn dpad-down" aria-label="Move Down">▼</button>
+                </div>
+            </section>
+
+            <section id="game-highlow" class="game-section hidden">
+                <div class="score-row centralize">
+                    <div class="score-board">Tries Left: <span id="hl-attempts">7</span></div>
+                </div>
+                <div id="hl-feedback" class="feedback-box">Guess a number between 1 and 100</div>
+                <form id="hl-form" class="interaction-zone">
+                    <div class="input-wrapper">
+                        <input type="number" id="hl-input" placeholder="Type a number..." min="1" max="100" autocomplete="off" required>
+                    </div>
+                    <button type="submit" id="hl-submit" class="primary-btn full-width">Guess</button>
+                </form>
+                <div class="hl-log-container">
+                    <p class="history-title">Guess History</p>
+                    <div id="hl-log" class="hl-log"></div>
+                </div>
+                <button id="hl-reset" class="secondary-btn full-width hidden">Play Again</button>
+            </section>
+
+            <section id="game-flappy" class="game-section hidden">
+                <div class="score-row centralize">
+                    <div class="score-board">Score: <span id="flappy-score">0</span></div>
+                </div>
+                <div class="snake-container-frame">
+                    <div class="snake-container">
+                        <canvas id="flappy-canvas" width="300" height="300"></canvas>
+                        <div id="flappy-overlay" class="completion-overlay">
+                            <button id="flappy-start" class="primary-btn spec-btn">Start Game</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
